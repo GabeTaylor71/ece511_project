@@ -13,8 +13,8 @@ void top(uint64_t state_to_accl_addr,
 	//Transfer Input Matrices
 	//Transfer M1
 	*DmaRdAddr  = state_to_accl_addr;
-	*DmaWrAddr  = MATRIX_TO;
-	*DmaCopyLen = mat_size;
+	*DmaWrAddr  = MATRIX;
+	*DmaCopyLen = 8*5*5;
 	*DmaFlags   = DEV_INIT;
 	//Poll DMA for finish
 	while ((*DmaFlags & DEV_INTR) != DEV_INTR);
@@ -25,9 +25,9 @@ void top(uint64_t state_to_accl_addr,
 	while ((*keccakFlags & DEV_INTR) != DEV_INTR);
 
 	//Transfer M3
-	*DmaRdAddr  = MATRIX_BACK;
+	*DmaRdAddr  = MATRIX;
 	*DmaWrAddr  = state_back_accl_addr;
-	*DmaCopyLen = mat_size;
+	*DmaCopyLen = 8*5*5;
 	*DmaFlags   = DEV_INIT;
 	//Poll DMA for finish
 	while ((*DmaFlags & DEV_INTR) != DEV_INTR);

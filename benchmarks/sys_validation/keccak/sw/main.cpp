@@ -14,29 +14,26 @@ int LFSR86540(u8 *R) { (*R)=((*R)<<1)^(((*R)&0x80)?0x71:0); return ((*R)&2)>>1; 
 static u64 load64(const u8 *x) { ui i; u64 u=0; FOR(i,8) { u<<=8; u|=x[7-i]; } return u; }
 static void store64(u8 *x, u64 u) { ui i; FOR(i,8) { x[i]=u; u>>=8; } }
 static void xor64(u8 *x, u64 u) { ui i; FOR(i,8) { x[i]^=u; u>>=8; } }
-#define rL(x,y) load64((u8*)s+8*(x+5*y))
-#define wL(x,y,l) store64((u8*)s+8*(x+5*y),l)
-#define XL(x,y,l) xor64((u8*)s+8*(x+5*y),l)
+#define rL(x,y) load64((u8*)check+8*(x+5*y))
+#define wL(x,y,l) store64((u8*)check+8*(x+5*y),l)
+#define XL(x,y,l) xor64((u8*)check+8*(x+5*y),l)
 
 keccak_struct kec;
 
 volatile uint8_t  * top   = (uint8_t  *)(TOP + 0x00);
-volatile uint32_t * val_to = (uint32_t *)(TOP + 0x01);
-volatile uint32_t * val_from = (uint32_t *)(TOP + 0x09);
+volatile uint32_t * val_matrix = (uint32_t *)(TOP + 0x01);
 
 int __attribute__ ((optimize("0"))) main(void) {
 	m5_reset_stats();
     uint32_t base = 0x80c00000;
-	TYPE *matrix_a = (TYPE *)base;
-	TYPE *matrix_b = (TYPE *)(base+8*5*5);
-	TYPE *check = (TYPE *)(base+16*5*5);
+	TYPE *matrix = (TYPE *)base;
+	TYPE *check = (TYPE *)(base+8*5*5);
 	int row_size = 5;
     int col_size = 5;
     volatile int count = 0;
 	stage = 0;
 
-    kec.matrix_to = matrix_a;
-    kec.matrix_from = matrix_b;
+    kec.matrix = matrix;
     kec.row_size = row_size;
     kec.col_size = col_size;
 
@@ -44,8 +41,7 @@ int __attribute__ ((optimize("0"))) main(void) {
     genData(&kec);
     printf("Data generated\n");
 
-    *val_matrix_a = (uint32_t)(void *)matrix_a;
-    *val_matrix_b = (uint32_t)(void *)matrix_b;
+    *val_matrix = (uint32_t)(void *)matrix;
     // printf("%d\n", *top);
     *top = 0x01;
     while (stage < 1) count++;
@@ -55,6 +51,7 @@ int __attribute__ ((optimize("0"))) main(void) {
     printf("Checking result\n");
     printf("Running bench on CPU\n");
 	bool fail = false;
+    memcpy(check, matrix, 8*row_size*col_size);
 
     ui r,x,y,i,j,Y; u8 R=0x01; u64 C[5],D;
     for(i=0; i<24; i++) {
@@ -66,8 +63,8 @@ int __attribute__ ((optimize("0"))) main(void) {
 
     printf("Comparing CPU run to accelerated run\n");
     for(i=0; i<ROW*COL; i++) {
-        if(matrix_b[i] != check[i]) {
-            printf("Expected:%f Actual:%f\n", check[i], matrix_b[i]);
+        if(matrix[i] != check[i]) {
+            printf("Expected:%f Actual:%f\n", check[i], matrix[i]);
             fail = true;
             break;
         }

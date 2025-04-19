@@ -1,18 +1,17 @@
 #include "hw_defines.h"
-
+long int * m1;
 int LFSR86540(u8 *R) { (*R)=((*R)<<1)^(((*R)&0x80)?0x71:0); return ((*R)&2)>>1; }
 #define ROL(a,o) ((((u64)a)<<o)^(((u64)a)>>(64-o)))
 static u64 load64(const u8 *x) { ui i; u64 u=0; FOR(i,8) { u<<=8; u|=x[7-i]; } return u; }
 static void store64(u8 *x, u64 u) { ui i; FOR(i,8) { x[i]=u; u>>=8; } }
 static void xor64(u8 *x, u64 u) { ui i; FOR(i,8) { x[i]^=u; u>>=8; } }
-#define rL(x,y) load64((u8*)s+8*(x+5*y))
-#define wL(x,y,l) store64((u8*)s+8*(x+5*y),l)
-#define XL(x,y,l) xor64((u8*)s+8*(x+5*y),l)
-
-int LFSR86540(u8 *R) { (*R)=((*R)<<1)^(((*R)&0x80)?0x71:0); return ((*R)&2)>>1; }
+#define rL(x,y) load64((u8*)m1+8*(x+5*y))
+#define wL(x,y,l) store64((u8*)m1+8*(x+5*y),l)
+#define XL(x,y,l) xor64((u8*)m1+8*(x+5*y),l)
 
 void KeccakF1600()
 {
+    m1     = (long int    *)MATRIX;
     ui r,x,y,i,j,Y; u8 R=0x01; u64 C[5],D;
     for(i=0; i<24; i++) {
         /*θ*/ FOR(x,5) C[x]=rL(x,0)^rL(x,1)^rL(x,2)^rL(x,3)^rL(x,4); FOR(x,5) { D=C[(x+4)%5]^ROL(C[(x+1)%5],1); FOR(y,5) XL(x,y,D); }

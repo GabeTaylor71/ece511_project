@@ -24,12 +24,7 @@ acc_cluster:
       PIOSize: 1
       PIOMaster: LocalBus
     - Var:
-      - Name: MATRIX_TO
-        Type: SPM
-        Size: 200
-        Ports: 2
-    - Var:
-      - Name: MATRIX_FROM
+      - Name: MATRIX
         Type: SPM
         Size: 200
         Ports: 2
