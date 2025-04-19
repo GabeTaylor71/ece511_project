@@ -20,7 +20,7 @@ void top(uint64_t state_to_accl_addr,
 	while ((*DmaFlags & DEV_INTR) != DEV_INTR);
 
 	//Start the accelerated function
-	*GEMMFlags = DEV_INIT;
+	*keccakFlags = DEV_INIT;
 	//Poll function for finish
 	while ((*keccakFlags & DEV_INTR) != DEV_INTR);
 
