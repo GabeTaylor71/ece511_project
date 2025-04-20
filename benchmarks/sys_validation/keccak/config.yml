@@ -31,7 +31,7 @@ acc_cluster:
 hw_config:
   name: keccak_cluster
   top:
-  gemm:
+  keccak:
     instructions:
       add:
         functional_unit: 1
@@ -122,12 +122,7 @@ hw_config:
         functional_unit: 0
         functional_unit_limit: 0
         opcode_num: 24
-        runtime_cycles: 16
-      fshl:
-        functional_unit: 3          
-        functional_unit_limit: 0      
-        opcode_num: 61                
-        runtime_cycles: 1            
+        runtime_cycles: 16         
       fsub:
         functional_unit: 6
         functional_unit_limit: 0

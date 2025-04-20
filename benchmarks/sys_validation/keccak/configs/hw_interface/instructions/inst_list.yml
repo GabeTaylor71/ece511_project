@@ -71,10 +71,6 @@ instructions:
     functional_unit: 0
     opcode_num: 24
     runtime_cycles: 16
-  fshl:
-    functional_unit: 3          
-    opcode_num: 61                
-    runtime_cycles: 1  
   fsub:
     functional_unit: 6
     opcode_num: 16

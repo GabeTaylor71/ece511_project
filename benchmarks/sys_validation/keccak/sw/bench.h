@@ -1,8 +1,7 @@
-#include "../defines.h"
 volatile int stage;
 
 typedef struct {
-    TYPE * matrix;
+    long int * matrix;
     int row_size;
     int col_size;
 } keccak_struct;

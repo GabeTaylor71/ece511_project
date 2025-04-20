@@ -3,7 +3,7 @@
 #include <cstring>
 #include "bench.h"
 #include "../../../common/m5ops.h"
-#include "../keccak_clstr_hw_defines.h"
+#include "../keccak_cluster_hw_defines.h"
 #define FOR(i,n) for(i=0; i<n; ++i)
 typedef unsigned char u8;
 typedef unsigned long long int u64;
@@ -26,8 +26,8 @@ volatile uint32_t * val_matrix = (uint32_t *)(TOP + 0x01);
 int __attribute__ ((optimize("0"))) main(void) {
 	m5_reset_stats();
     uint32_t base = 0x80c00000;
-	TYPE *matrix = (TYPE *)base;
-	TYPE *check = (TYPE *)(base+8*5*5);
+	long int *matrix = (long int *)base;
+	long int *check = (long int *)(base+8*5*5);
 	int row_size = 5;
     int col_size = 5;
     volatile int count = 0;
@@ -39,6 +39,7 @@ int __attribute__ ((optimize("0"))) main(void) {
 
     printf("Generating data\n");
     genData(&kec);
+    memcpy(check, matrix, 8*row_size*col_size);
     printf("Data generated\n");
 
     *val_matrix = (uint32_t)(void *)matrix;
@@ -51,7 +52,6 @@ int __attribute__ ((optimize("0"))) main(void) {
     printf("Checking result\n");
     printf("Running bench on CPU\n");
 	bool fail = false;
-    memcpy(check, matrix, 8*row_size*col_size);
 
     ui r,x,y,i,j,Y; u8 R=0x01; u64 C[5],D;
     for(i=0; i<24; i++) {

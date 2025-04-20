@@ -4,7 +4,7 @@ void top(uint64_t state_to_accl_addr,
 		 uint64_t state_back_accl_addr) {
 
 	//Define Device MMRs
-	volatile uint8_t  * keccakFlags  = (uint8_t *)keccakFlags;
+	volatile uint8_t  * keccakFlags  = (uint8_t *)(KECCAK);
 	volatile uint8_t  * DmaFlags   = (uint8_t  *)(DMA_Flags);
 	volatile uint64_t * DmaRdAddr  = (uint64_t *)(DMA_RdAddr);
 	volatile uint64_t * DmaWrAddr  = (uint64_t *)(DMA_WrAddr);

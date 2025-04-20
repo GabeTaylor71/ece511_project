@@ -1064,7 +1064,7 @@ LLVMInterface::createInstruction(llvm::Instruction * inst, uint64_t id) {
         case llvm::Instruction::Call: return SALAM::createCallInst(id, this, debug(), OpCode, hw->cycle_counts->call_inst, functional_unit); break;
         case llvm::Instruction::Select: return SALAM::createSelectInst(id, this, debug(), OpCode, hw->cycle_counts->select_inst, functional_unit); break;
         default: {
-            warn("Tried to create instance of undefined instruction type!");
+            warn("Tried to create instance of undefined instruction type! ");
             return SALAM::createBadInst(id, this, dbg, OpCode, 0, 0); break;
         }
     }

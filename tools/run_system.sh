@@ -116,10 +116,10 @@ if (! "$M5_PATH"/tools/SALAM-Configurator/systembuilder.py --sys-name "$BENCH" -
 	exit 1
 fi
 
-if [ $BUILD ]; then
-  echo "Building Bench"
-  make all -C "$M5_PATH/$BENCH_PATH"
-fi
+#if [ $BUILD ]; then
+#  echo "Building Bench"
+#  make all -C "$M5_PATH/$BENCH_PATH"
+#fi
 
 if [ ${PRINT_TO_FILE} == True ]; then
 	mkdir -p "$OUTDIR"
