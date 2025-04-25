@@ -28,6 +28,10 @@ acc_cluster:
         Type: SPM
         Size: 200
         Ports: 2
+      - Name: TEMP
+        Type: SPM
+        Size: 256
+        Ports: 2
 hw_config:
   name: keccak_cluster
   top:
@@ -213,11 +217,11 @@ hw_config:
         functional_unit_limit: 0
         opcode_num: 40
         runtime_cycles: 0
-      shl:
-        functional_unit: 3
-        functional_unit_limit: 0
-        opcode_num: 25
-        runtime_cycles: 1
+      # shl:
+      #   functional_unit: 3
+      #   functional_unit_limit: 0
+      #   opcode_num: 25
+      #   runtime_cycles: 1
       srem:
         functional_unit: 0
         functional_unit_limit: 0

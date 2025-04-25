@@ -10,4 +10,5 @@
 //Accelerator: KECCAK
 #define KECCAK 0x10020080
 #define MATRIX 0x100200c0
+#define TEMP 0x100201c0
 //END GENERATED CODE

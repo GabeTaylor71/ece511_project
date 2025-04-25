@@ -13,3 +13,4 @@ typedef unsigned char u8;
 typedef unsigned long long int u64;
 typedef unsigned int ui;
 
+typedef uint64_t tKeccakLane;

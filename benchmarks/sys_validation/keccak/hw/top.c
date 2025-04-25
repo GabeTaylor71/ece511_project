@@ -1,7 +1,6 @@
 #include "hw_defines.h"
 
-void top(uint64_t state_to_accl_addr,
-		 uint64_t state_back_accl_addr) {
+void top(uint64_t state_to_accl_addr) {
 
 	//Define Device MMRs
 	volatile uint8_t  * keccakFlags  = (uint8_t *)(KECCAK);
@@ -26,7 +25,7 @@ void top(uint64_t state_to_accl_addr,
 
 	//Transfer M3
 	*DmaRdAddr  = MATRIX;
-	*DmaWrAddr  = state_back_accl_addr;
+	*DmaWrAddr  = state_to_accl_addr;
 	*DmaCopyLen = 8*5*5;
 	*DmaFlags   = DEV_INIT;
 	//Poll DMA for finish
