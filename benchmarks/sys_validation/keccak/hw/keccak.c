@@ -10,11 +10,9 @@ void KeccakF1600()
 
     u64* C = (u64*) TEMP;
 
-    // printf("sth");
-
     for (i = 0; i < 24; i++) {
-        //("iterating\n");
         // θ step
+        #pragma clang unroll(full)
         for (x = 0; x < 5; x++) {
             C[x] = 0;
             for (y = 0; y < 5; y++) {
@@ -27,6 +25,7 @@ void KeccakF1600()
                 C[x] ^= u;
             }
         }
+        #pragma clang unroll(full)
         for (x = 0; x < 5; x++) {
             D = C[(x + 4) % 5] ^ (((u64)C[(x + 1) % 5]));
             for (y = 0; y < 5; y++) {
@@ -52,7 +51,7 @@ void KeccakF1600()
                 Dload <<= 8;
                 Dload |= ptr[7 - k];
             }
-
+            #pragma clang unroll(full)
             for (j = 0; j < 24; j++) {
                 r += j + 1;
                 Y = (2 * x + 3 * y) % 5;
@@ -60,6 +59,7 @@ void KeccakF1600()
                 y = Y;
                 u8 *ptr2 = (u8*)m1 + 8 * (x + 5 * y);
                 u64 Ctmp = 0;
+                
                 for (ui k = 0; k < 8; k++) {
                     Ctmp <<= 8;
                     Ctmp |= ptr2[7 - k];
@@ -73,6 +73,7 @@ void KeccakF1600()
         }
 
         // χ step
+        #pragma clang unroll(full)
         for (y = 0; y < 5; y++) {
             for (x = 0; x < 5; x++) {
                 u8 *ptr = (u8*)m1 + 8 * (x + 5 * y);
@@ -93,6 +94,7 @@ void KeccakF1600()
         }
 
         // ι step
+        #pragma clang unroll(full)
         for (j = 0; j < 7; j++) {
             u8 feedback = (R & 0x80) ? 0x71 : 0;
             R = (R << 1) ^ feedback;

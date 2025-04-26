@@ -30,7 +30,7 @@ acc_cluster:
         Ports: 2
       - Name: TEMP
         Type: SPM
-        Size: 256
+        Size: 40
         Ports: 2
 hw_config:
   name: keccak_cluster
