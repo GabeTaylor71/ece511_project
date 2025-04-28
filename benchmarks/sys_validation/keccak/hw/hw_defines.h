@@ -10,7 +10,9 @@
 
 #define FOR(i,n) for(i=0; i<n; ++i)
 typedef unsigned char u8;
+typedef unsigned char uint8_t;
 typedef unsigned long long int u64;
+typedef unsigned long long int uint64_t;
 typedef unsigned int ui;
 
 typedef uint64_t tKeccakLane;

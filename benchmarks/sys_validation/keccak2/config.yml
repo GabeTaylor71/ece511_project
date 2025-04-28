@@ -1,6 +1,6 @@
 ---
 acc_cluster:
-  - Name: keccak_cluster
+  - Name: keccak2_clstr
   - DMA:
     - Name: dma
       MaxReqSize: 64
@@ -16,36 +16,27 @@ acc_cluster:
       PIOMaster: LocalBus
       # Local to PIO
       LocalSlaves: LocalBus
-      Debug: True
+      Debug: False
   - Accelerator:
-    - Name: keccak
-      IrPath: hw/keccak.ll
-      Debug: True
+    - Name: keccak2
+      IrPath: hw/keccak2.ll
+      Debug: False
       PIOSize: 1
       PIOMaster: LocalBus
     - Var:
-      - Name: STATE
+      - Name: IN_STATE
         Type: SPM
         Size: 200
-        Ports: 16
-      - Name: C_ARR
+        Ports: 2
+    - Var:
+      - Name: OUT_STATE
         Type: SPM
-        Size: 40
-        Ports: 16
-      - Name: D_ARR
-        Type: SPM
-        Size: 1
-        Ports: 16
-      - Name: TEMP_ARR
-        Type: SPM
-        Size: 40
-        Ports: 16
-      
-
+        Size: 200
+        Ports: 2
 hw_config:
-  name: keccak_cluster
+  name: keccak2_clstr
   top:
-  keccak:
+  keccak2:
     instructions:
       add:
         functional_unit: 1
@@ -136,7 +127,7 @@ hw_config:
         functional_unit: 0
         functional_unit_limit: 0
         opcode_num: 24
-        runtime_cycles: 16         
+        runtime_cycles: 16
       fsub:
         functional_unit: 6
         functional_unit_limit: 0

@@ -1,5 +1,5 @@
 //BEGIN GENERATED CODE
-//Cluster: KECCAK_CLUSTER
+//Cluster: KECCAK2_CLSTR
 //NonCoherentDMA
 #define DMA_Flags 0x10020000
 #define DMA_RdAddr 0x10020001
@@ -7,10 +7,8 @@
 #define DMA_CopyLen 0x10020011
 //Accelerator: TOP
 #define TOP 0x10020040
-//Accelerator: KECCAK
-#define KECCAK 0x10020080
-#define STATE 0x100200c0
-#define C_ARR 0x100201c0
-#define D_ARR 0x10020200
-#define TEMP_ARR 0x10020240
+//Accelerator: KECCAK2
+#define KECCAK2 0x10020080
+#define IN_STATE 0x100200c0
+#define OUT_STATE 0x100201c0
 //END GENERATED CODE

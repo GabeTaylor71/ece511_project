@@ -3,10 +3,11 @@ BENCH=""
 BENCH_PATH=""
 CONFIG_NAME=""
 FLAGS=""
-# FLAGS="SALAM_Debug,CommInterface,NoncoherentDma,LLVMParse"
+# FLAGS="--debug-flags=DeviceMMR,LLVMInterface,AddrRanges,NoncoherentDma,RuntimeCompute"
+#FLAGS="SALAM_Debug,CommInterface,NoncoherentDma,LLVMParse,RuntimeCompute"
 BUILD=False
 DEBUG=False
-PRINT_TO_FILE=False
+PRINT_TO_FILE=True
 VALGRIND=False
 
 while [[ $# -gt 0 ]]; do
@@ -116,10 +117,10 @@ if (! "$M5_PATH"/tools/SALAM-Configurator/systembuilder.py --sys-name "$BENCH" -
 	exit 1
 fi
 
-#if [ $BUILD ]; then
-#  echo "Building Bench"
-#  make all -C "$M5_PATH/$BENCH_PATH"
-#fi
+if [ $BUILD ]; then
+  echo "Building Bench"
+  make all -C "$M5_PATH/$BENCH_PATH"
+fi
 
 if [ ${PRINT_TO_FILE} == True ]; then
 	mkdir -p "$OUTDIR"
