@@ -38,77 +38,77 @@ int __attribute__ ((optimize("0"))) main(void) {
     unsigned int blockSize = 0;
     unsigned int i;
 
-    // if (((rate + capacity) != 1600) || ((rate % 8) != 0))
-    // return 0;
+    if (((rate + capacity) != 1600) || ((rate % 8) != 0))
+    return 0;
 
-    // memset(state, 0, sizeof(state));
+    memset(state, 0, sizeof(state));
 
-    // while (inputByteLen > 0) {
-    //     blockSize = (inputByteLen < rateInBytes) ? (unsigned int)inputByteLen : rateInBytes;
-    //     for (i = 0; i < blockSize; i++)
-    //         state[i] ^= input[i];
-    //     input += blockSize;
-    //     inputByteLen -= blockSize;
+    while (inputByteLen > 0) {
+        blockSize = (inputByteLen < rateInBytes) ? (unsigned int)inputByteLen : rateInBytes;
+        for (i = 0; i < blockSize; i++)
+            state[i] ^= input[i];
+        input += blockSize;
+        inputByteLen -= blockSize;
 
-    //     if (blockSize == rateInBytes) {
-    //         // activate accelerator
-    //         *val_state = (uint32_t)(void *)state;
+        if (blockSize == rateInBytes) {
+            // activate accelerator
+            *val_state = (uint32_t)(void *)state;
             
-    //         accelerator_offload_cnts += 1;
-    //         *top = 0x01;
-    //         int count = 0; 
-    //         while (stage < 1) count++;
+            accelerator_offload_cnts += 1;
+            *top = 0x01;
+            int count = 0; 
+            while (stage < 1) count++;
 
-    //         blockSize = 0;
-    //     }
-    // }
+            blockSize = 0;
+        }
+    }
 
-    // state[blockSize] ^= delimitedSuffix;
-    // if (((delimitedSuffix & 0x80) != 0) && (blockSize == (rateInBytes - 1))) {
-    //     // call permute function again 
-    //     state[rateInBytes - 1] ^= 0x80;
+    state[blockSize] ^= delimitedSuffix;
+    if (((delimitedSuffix & 0x80) != 0) && (blockSize == (rateInBytes - 1))) {
+        // call permute function again 
+        state[rateInBytes - 1] ^= 0x80;
 
-    //     // activate accelerator
-    //     *val_state = (uint32_t)(void *)state;
+        // activate accelerator
+        *val_state = (uint32_t)(void *)state;
     
-    //     accelerator_offload_cnts += 1;
+        accelerator_offload_cnts += 1;
     
-    //     *top = 0x01;
-    //     int count = 0; 
-    //     while (stage < 1) count++;
+        *top = 0x01;
+        int count = 0; 
+        while (stage < 1) count++;
     
-    // }
+    }
 
 
-    // // get the squeezed outputs
-    // // GENERATE OUTPUTS
-    // while (outputByteLen > 0) {
-    //     blockSize = (outputByteLen < rateInBytes) ? (unsigned int)outputByteLen : rateInBytes;
-    //     memcpy(output, state, blockSize);
-    //     output += blockSize;
-    //     outputByteLen -= blockSize;
+    // get the squeezed outputs
+    // GENERATE OUTPUTS
+    while (outputByteLen > 0) {
+        blockSize = (outputByteLen < rateInBytes) ? (unsigned int)outputByteLen : rateInBytes;
+        memcpy(output, state, blockSize);
+        output += blockSize;
+        outputByteLen -= blockSize;
 
-    //     if (outputByteLen > 0) {
-    //         // activate accelerator
-    //         *val_state = (uint32_t)(void *)state;
+        if (outputByteLen > 0) {
+            // activate accelerator
+            *val_state = (uint32_t)(void *)state;
 
-    //         accelerator_offload_cnts += 1;
+            accelerator_offload_cnts += 1;
 
-    //         *top = 0x01;
-    //         int count = 0; 
-    //         while (stage < 1) count++;
+            *top = 0x01;
+            int count = 0; 
+            while (stage < 1) count++;
 
-    //     }
-    //     // KeccakF1600_StatePermute(state);
-    // }
+        }
+        // KeccakF1600_StatePermute(state);
+    }
 
-             *val_state = (uint32_t)(void *)state;
+            //  *val_state = (uint32_t)(void *)state;
 
-             accelerator_offload_cnts += 1;
+            //  accelerator_offload_cnts += 1;
 
-             *top = 0x01;
-             int count = 0; 
-             while (stage < 1) count++;
+            //  *top = 0x01;
+            //  int count = 0; 
+            //  while (stage < 1) count++;
 
     printf("Job complete\n");
     printf("Number of accelerator offloads: %d.\n", accelerator_offload_cnts); 

@@ -27,19 +27,19 @@ acc_cluster:
       - Name: STATE
         Type: SPM
         Size: 200
-        Ports: 16
+        Ports: 8
       - Name: C_ARR
         Type: SPM
         Size: 40
-        Ports: 16
+        Ports: 1
       - Name: D_ARR
         Type: SPM
-        Size: 1
-        Ports: 16
+        Size: 40
+        Ports: 1
       - Name: TEMP_ARR
         Type: SPM
         Size: 40
-        Ports: 16
+        Ports: 1
       
 
 hw_config:
